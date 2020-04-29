@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import exception.LibraryResourceAlreadyExistException;
+import exception.LibraryResourceNotFoundException;
 
 @RestController
 @RequestMapping(path = "/v1/publishers")
@@ -22,9 +23,22 @@ public class PublisherController {
 	    }
 
 	@GetMapping(path = "/{publisherId}")
-	public Publisher getPublisher(@PathVariable Integer publisherId) {
+	public ResponseEntity<?> getPublisher(@PathVariable Integer publisherId) {
 		
-		return new Publisher(publisherId, "Prentice Hall", "prentice@email.com", "123-456-789");
+		Publisher publisher = null;
+		
+		try {
+			publisher = publisherService.getPublisher(publisherId);
+		}catch(LibraryResourceNotFoundException e) {
+			
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+		
+		}
+		
+		
+		return new ResponseEntity<>(publisher, HttpStatus.OK);
+		
+	
 		
 		
 	}
@@ -33,7 +47,7 @@ public class PublisherController {
 public ResponseEntity<?> addPublisher(@RequestBody Publisher publisher){
 	
 	try {
-		publisher = publisherService.addPublisher(publisher);
+		publisherService.addPublisher(publisher);
 	} catch (LibraryResourceAlreadyExistException e) {
 		 return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
 	}
