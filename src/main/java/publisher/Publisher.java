@@ -2,7 +2,7 @@ package publisher;
 
 public class Publisher {
 	
-	private String publisherId;
+	private Integer publisherId;
 	private String name;
 	private String emailId;
 	private String phoneNumber;
@@ -11,7 +11,7 @@ public class Publisher {
 		
 	}
 	
-	public Publisher(String publisherId, String name, String emailId, String phoneNumber) {
+	public Publisher(Integer publisherId, String name, String emailId, String phoneNumber) {
 	
 		this.publisherId = publisherId;
 		this.name = name;
@@ -19,11 +19,11 @@ public class Publisher {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public String getPublisherId() {
+	public Integer getPublisherId() {
 		return publisherId;
 	}
 
-	public void setPublisherId(String publisherId) {
+	public void setPublisherId(Integer publisherId) {
 		this.publisherId = publisherId;
 	}
 
@@ -50,7 +50,5 @@ public class Publisher {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	
-	
 
 }
